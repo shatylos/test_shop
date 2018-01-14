@@ -2,20 +2,22 @@
 
 {% block body %}
 
-    <h1>{{ product.title }}</h1>
+    <p><a href="{{ path('product_list') }}"><< Product List</a></p>
+
+    <h1 id="param-title">{{ product.title }}</h1>
 
     <ul>
-        <li>SKU - {{ product.sku }}</li>
-        <li>Price - {{ product.price }}</li>
+        <li>SKU - <span id="param-sku">{{ product.sku }}</span></li>
+        <li>Price - <span id="param-price">{{ product.price }}</span></li>
     </ul>
 
     {% if product.productBaseView.productModifications %}
 
         <h3>Product modifications:</h3>
-        <select>
+        <select id="modifications">
             <option value="{{ product.productBaseView.sku }}">{{ product.productBaseView.title }}</option>
             {% for modification in product.productBaseView.productModifications %}
-                <option value="{{ modification.sku }}">{{ modification.title }}</option>
+                <option {% if product.id == modification.id %}selected{% endif %} value="{{ modification.sku }}">{{ modification.title }}</option>
             {% endfor %}
         </select>
 
@@ -30,4 +32,26 @@
         </ul>
     {% endif %}
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        var productApiUrl = '{{ path('product_detail_api', {sku: '__sku__'}) }}';
+        var productUrl = '{{ path('product_detail', {sku: '__sku__'}) }}';
+        $('#modifications').change(function () {
+            var apiUrl = productApiUrl.replace(/__sku__/, $(this).val());
+            var url = productUrl.replace(/__sku__/, $(this).val());
+            $.ajax({
+                url: apiUrl,
+                dataType: 'json',
+                success: function (data) {
+                    for (var i in data) {
+                        $('#param-' + i).text(data[i]);
+                    }
+                    window.history.pushState("", "", url);
+                }
+            });
+        });
+    </script>
 {% endblock %}
