@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <ul>
+    {% for product in products %}
+        <li><a href="{{ path('product_detail', {sku: product.sku}) }}">{{ product.title }}</a></li>
+    {% else %}
+        Not products found
+    {% endfor %}
+    </ul>
+
+{% endblock %}
