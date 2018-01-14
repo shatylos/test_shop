@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -140,6 +141,16 @@ class Product
     public function getFeatures()
     {
         return $this->features;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFeaturesByLang($lang)
+    {
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq("lang", $lang));
+        return $this->features->matching($criteria);
     }
 
     /**
