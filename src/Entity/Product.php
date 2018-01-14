@@ -170,6 +170,14 @@ class Product
     }
 
     /**
+     * @return mixed
+     */
+    public function getProductBaseView()
+    {
+        return ($this->getProductBase()) ? $this->getProductBase() : $this;
+    }
+
+    /**
      * @param mixed $productBase
      */
     public function setProductBase($productBase): void
