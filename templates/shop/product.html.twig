@@ -9,4 +9,25 @@
         <li>Price - {{ product.price }}</li>
     </ul>
 
+    {% if product.productBaseView.productModifications %}
+
+        <h3>Product modifications:</h3>
+        <select>
+            <option value="{{ product.productBaseView.sku }}">{{ product.productBaseView.title }}</option>
+            {% for modification in product.productBaseView.productModifications %}
+                <option value="{{ modification.sku }}">{{ modification.title }}</option>
+            {% endfor %}
+        </select>
+
+    {% endif %}
+
+    {% if product.productBaseView.featuresByLang(lang) %}
+        <h3>Product features:</h3>
+        <ul>
+            {% for feature in product.productBaseView.featuresByLang(lang) %}
+                <li>{{ feature.type }} - {{ feature.title }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
 {% endblock %}

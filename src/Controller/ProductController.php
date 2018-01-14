@@ -38,6 +38,7 @@ class ProductController extends Controller
 
         return $this->render('shop/product.html.twig', [
             'product' => $product,
+            'lang' => 'en',
         ]);
     }
 }
