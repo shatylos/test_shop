@@ -43,11 +43,23 @@ class Product
     private $features;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="productModifications")
+     * @ORM\JoinColumn(name="product_base_id", referencedColumnName="id")
+     */
+    private $productBase;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="productBase")
+     */
+    private $productModifications;
+
+    /**
      * Product constructor.
      */
     public function __construct()
     {
         $this->categories = new ArrayCollection();
+        $this->productModifications = new ArrayCollection();
     }
 
     /**
@@ -79,7 +91,7 @@ class Product
      */
     public function getTitle()
     {
-        return $this->title;
+        return (!$this->title && $this->getProductBase()) ? $this->getProductBase()->getTitle() : $this->title;
     }
 
     /**
@@ -95,7 +107,7 @@ class Product
      */
     public function getPrice()
     {
-        return $this->price;
+        return (!$this->price && $this->getProductBase()) ? $this->getProductBase()->getPrice() : $this->price;
     }
 
     /**
@@ -136,6 +148,38 @@ class Product
     public function setFeatures($features): void
     {
         $this->features = $features;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProductBase()
+    {
+        return $this->productBase;
+    }
+
+    /**
+     * @param mixed $productBase
+     */
+    public function setProductBase($productBase): void
+    {
+        $this->productBase = $productBase;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProductModifications()
+    {
+        return $this->productModifications;
+    }
+
+    /**
+     * @param mixed $productModifications
+     */
+    public function setProductModifications($productModifications): void
+    {
+        $this->productModifications = $productModifications;
     }
 
 }
