@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +37,19 @@ class ProductFeature
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
     private $product;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Category", inversedBy="features")
+     */
+    private $categories;
+
+    /**
+     * ProductFeature constructor.
+     */
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -108,5 +122,23 @@ class ProductFeature
     {
         $this->product = $product;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    /**
+     * @param mixed $categories
+     */
+    public function setCategories($categories): void
+    {
+        $this->categories = $categories;
+    }
+
+
 
 }

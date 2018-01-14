@@ -28,11 +28,17 @@ class Category
     private $products;
 
     /**
+     * @ORM\ManyToMany(targetEntity="ProductFeature", mappedBy="categories")
+     */
+    private $features;
+
+    /**
      * Category constructor.
      */
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->features = new ArrayCollection();
     }
 
     /**
@@ -73,6 +79,22 @@ class Category
     public function setProducts($products): void
     {
         $this->products = $products;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFeatures()
+    {
+        return $this->features;
+    }
+
+    /**
+     * @param mixed $features
+     */
+    public function setFeatures($features): void
+    {
+        $this->features = $features;
     }
 
 }
