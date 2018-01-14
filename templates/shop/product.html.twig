@@ -11,7 +11,7 @@
         <li>Price - <span id="param-price">{{ product.price }}</span></li>
     </ul>
 
-    {% if product.productBaseView.productModifications %}
+    {% if product.productBaseView.productModifications.count %}
 
         <h3>Product modifications:</h3>
         <select id="modifications">
@@ -23,7 +23,7 @@
 
     {% endif %}
 
-    {% if product.productBaseView.featuresByLang(lang) %}
+    {% if product.productBaseView.featuresByLang(lang).count %}
         <h3>Product features:</h3>
         <ul>
             {% for feature in product.productBaseView.featuresByLang(lang) %}
