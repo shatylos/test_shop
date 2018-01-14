@@ -38,6 +38,11 @@ class Product
     private $categories;
 
     /**
+     * @ORM\OneToMany(targetEntity="ProductFeature", mappedBy="product")
+     */
+    private $features;
+
+    /**
      * Product constructor.
      */
     public function __construct()
@@ -115,6 +120,22 @@ class Product
     public function setCategories($categories): void
     {
         $this->categories = $categories;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFeatures()
+    {
+        return $this->features;
+    }
+
+    /**
+     * @param mixed $features
+     */
+    public function setFeatures($features): void
+    {
+        $this->features = $features;
     }
 
 }

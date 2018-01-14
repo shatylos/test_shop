@@ -32,6 +32,12 @@ class ProductFeature
     private $lang;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="features")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     */
+    private $product;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -85,6 +91,22 @@ class ProductFeature
     public function setLang($lang): void
     {
         $this->lang = $lang;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * @param mixed $product
+     */
+    public function setProduct($product): void
+    {
+        $this->product = $product;
     }
 
 }
