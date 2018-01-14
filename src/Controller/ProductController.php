@@ -23,4 +23,21 @@ class ProductController extends Controller
         ]);
     }
 
+    /**
+     * @Route("/{sku}/", name="product_detail")
+     */
+    public function productDetail($sku)
+    {
+        $product = $this->getDoctrine()->getRepository($this->entityClass)->findOneBy([
+            'sku' => $sku,
+        ]);
+
+        if (!$product) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->render('shop/product.html.twig', [
+            'product' => $product,
+        ]);
+    }
 }
