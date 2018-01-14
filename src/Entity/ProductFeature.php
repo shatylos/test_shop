@@ -7,6 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProductFeatureRepository")
+ * @ORM\Table(name="product_feature", indexes={
+ *     @ORM\Index(name="lang_idx", columns={"lang", "product_id"})
+ * })
  */
 class ProductFeature
 {
